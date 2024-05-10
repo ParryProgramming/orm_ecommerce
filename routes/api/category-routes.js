@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const { Category, Product } = require('../../models');
 
-// The `/api/categories` endpoint
+// Get all categories and their associated products
 
 router.get('/', async (req, res) => {
+
   // finds all categories include its associated Products
   try {
     const categoryData = await Category.findAll({
@@ -15,7 +16,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// finds one category by its `id` value including its associated Products
+// Get a single category and its associated products by ID
 router.get('/:id', async (req, res) => {
   try {
     const categoryData = await Category.findByPk(req.params.id, {
@@ -24,7 +25,7 @@ router.get('/:id', async (req, res) => {
 
     // displays if no category data is found
     if (!categoryData) {
-      res.status(404).json({ message: "No category found with that id!" });
+      res.status(404).json({ message: "Message: ID not found" });
       return;
     }
     //comes back with category data results
@@ -70,7 +71,7 @@ router.put('/:id', async (req, res) => {
       });
       console.log(categoryData)
       if (!categoryData) {
-        res.status(404).json({ message: "ID not found!" });
+        res.status(404).json({ message: "Message: ID not found!" });
         return;
       }
       res.status(200).json(categoryData);
